@@ -10,22 +10,27 @@
     <link rel="icon" type="image/png" href="./icon-v2.png" />
     <link rel="apple-touch-icon" href="./icon-v2.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./icon-v2.png" />
+
+    <!-- 字體：Orbitron（科技／硬派）與 Teko（機械感）-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Teko:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
 
     <style>
       /* 🎨 新顏色與鋼鐵主題 */
       :root {
-        --metal-dark: #1b1d22;
-        --metal-card: #2a2d33;
+        --metal-dark: #121316; /* 背景更深 */
+        --metal-card: #222529; /* 卡片主要色 */
         --metal-border: #6d727b;
         --metal-accent: #a6abb3;
         --metal-text: #d9dde3;
         --steel-blue: #3b5c74;
+        --bolt-silver-1: #e6eaee;
+        --bolt-silver-2: #bfc6cc;
+        --card-highlight: rgba(255, 255, 255, 0.03);
       }
 
       * {
@@ -35,30 +40,37 @@
         -webkit-tap-highlight-color: transparent;
       }
 
+      html,
       body {
-        font-family: "Orbitron", "Teko", sans-serif;
+        height: 100%;
+      }
+
+      body {
+        font-family: "Teko", "Orbitron", sans-serif;
         background-color: var(--metal-dark);
 
-        /* 鋼板格柵紋理 */
+        /* 鋼板格柵紋理（細緻） */
         background-image: linear-gradient(
             45deg,
-            rgba(255, 255, 255, 0.05) 25%,
+            rgba(255, 255, 255, 0.02) 25%,
             transparent 25%
           ),
           linear-gradient(
             -45deg,
-            rgba(255, 255, 255, 0.05) 25%,
+            rgba(255, 255, 255, 0.02) 25%,
             transparent 25%
           ),
-          linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+          linear-gradient(
+            45deg,
+            transparent 75%,
+            rgba(255, 255, 255, 0.02) 75%
+          ),
           linear-gradient(
             -45deg,
             transparent 75%,
-            rgba(255, 255, 255, 0.05) 75%
+            rgba(255, 255, 255, 0.02) 75%
           );
-        background-size: 40px 40px;
-
-        min-height: 100vh;
+        background-size: 48px 48px;
         color: var(--metal-text);
         overflow-x: hidden;
         padding-bottom: 20px;
@@ -69,88 +81,112 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 20px;
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(6px);
+        padding: 12px 18px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(0, 0, 0, 0.02)
+        );
+        backdrop-filter: blur(4px);
         position: sticky;
         top: 0;
         z-index: 100;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       }
 
       .location-pill {
-        background: var(--steel-blue);
+        background: linear-gradient(180deg, var(--steel-blue), #2f5166);
         color: white;
-        padding: 5px 15px;
-        border-radius: 5px;
+        padding: 6px 14px;
+        border-radius: 6px;
         font-weight: 700;
-        font-size: 1.2rem;
+        font-size: 1.05rem;
         letter-spacing: 1px;
-        border: 2px solid var(--metal-border);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
       }
 
       .update-pill {
         font-size: 0.8rem;
         color: var(--metal-text);
-        background: rgba(255, 255, 255, 0.1);
-        padding: 4px 12px;
-        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 5px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
       }
 
       .container {
         padding: 20px;
-        max-width: 600px;
-        margin: 0 auto;
+        max-width: 760px;
+        margin: 18px auto;
       }
 
       /* 🎴 鋼鐵風 Hero 卡片 */
       .hero-card {
-        background: var(--metal-card);
-        border-radius: 20px;
-        padding: 30px 25px;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.01),
+            rgba(0, 0, 0, 0.15)
+          ),
+          var(--metal-card);
+        border-radius: 18px;
+        padding: 32px 26px;
         text-align: center;
-
-        border: 3px solid var(--metal-border);
-        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05),
-          0 8px 20px rgba(0, 0, 0, 0.6);
-
+        border: 2px solid rgba(255, 255, 255, 0.04);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02),
+          inset 0 -20px 40px rgba(0, 0, 0, 0.6), 0 12px 30px rgba(0, 0, 0, 0.6);
         position: relative;
-        margin-bottom: 25px;
+        margin-bottom: 24px;
+        overflow: visible;
       }
 
-      /* 🔩 角落螺絲 SVG */
-      .hero-card::before,
-      .hero-card::after {
-        content: "";
-        width: 28px;
-        height: 28px;
+      /* 四角螺絲（使用內嵌 SVG） */
+      .bolt {
         position: absolute;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><circle cx="32" cy="32" r="27" fill="%236d727b" stroke="%233f434a" stroke-width="6"/><line x1="20" y1="20" x2="44" y2="44" stroke="%233f434a" stroke-width="6"/><line x1="44" y1="20" x2="20" y2="44" stroke="%233f434a" stroke-width="6"/></svg>');
-        background-size: contain;
+        width: 26px;  /* ✅ 改小顆 */
+        height: 26px; /* ✅ 改小顆 */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+        transform: translateZ(0);
       }
 
-      .hero-card::before {
-        top: -12px;
-        left: -12px;
+      .bolt svg {
+        width: 100%;
+        height: 100%;
+        display: block;
       }
 
-      .hero-card::after {
-        top: -12px;
-        right: -12px;
+      .bolt-tl {
+        top: -13px;
+        left: -13px;
+      }
+      .bolt-tr {
+        top: -13px;
+        right: -13px;
+      }
+      .bolt-bl {
+        bottom: -13px;
+        left: -13px;
+      }
+      .bolt-br {
+        bottom: -13px;
+        right: -13px;
       }
 
-      /* 🎫 上方標籤 */
+      /* hero-period */
       .hero-period {
-        background: var(--steel-blue);
+        background: linear-gradient(180deg, var(--steel-blue), #2b4b60);
         color: white;
         padding: 6px 20px;
-        border-radius: 6px;
-        border: 2px solid var(--metal-border);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
         font-weight: 700;
         letter-spacing: 1px;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         position: absolute;
-        top: -15px;
+        top: -18px;
         left: 50%;
         transform: translateX(-50%);
       }
@@ -159,16 +195,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
-        margin: 15px 0;
+        gap: 12px;
+        margin: 18px 0;
       }
 
       .hero-icon {
-        font-size: 4rem;
-        animation: bounce 3s infinite;
+        font-size: 4.2rem;
+        animation: floaty 3s ease-in-out infinite;
       }
 
-      @keyframes bounce {
+      @keyframes floaty {
         0%,
         100% {
           transform: translateY(0);
@@ -179,14 +215,16 @@
       }
 
       .hero-temp {
-        font-size: 4rem;
+        font-size: 4.6rem;
         font-weight: 900;
         color: var(--metal-accent);
+        font-family: "Orbitron", "Teko", sans-serif;
+        letter-spacing: 1px;
       }
 
       .hero-desc {
-        font-size: 1.3rem;
-        margin-bottom: 20px;
+        font-size: 1.2rem;
+        margin-bottom: 18px;
         color: var(--metal-text);
         font-weight: 600;
       }
@@ -196,43 +234,54 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 12px;
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px dashed var(--metal-border);
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.03);
       }
 
       .advice-item {
-        background: rgba(255, 255, 255, 0.04);
-        padding: 10px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          rgba(0, 0, 0, 0.12)
+        );
+        padding: 12px;
         border-radius: 10px;
-        border: 1px solid var(--metal-border);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
       }
 
       .advice-icon {
-        font-size: 2rem;
+        font-size: 1.7rem;
       }
-
       .advice-text {
-        font-size: 1.2rem;
-        font-weight: 700;
+        font-size: 1.05rem;
+        font-weight: 800;
         color: var(--metal-accent);
       }
 
       /* 🔮 橫向預報 */
       .section-title {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         color: var(--metal-accent);
-        margin: 15px 0 10px 10px;
+        margin: 12px 0 10px 0;
         font-weight: 700;
         letter-spacing: 1px;
+        text-align: center; /* 稍後預報置中 */
       }
 
       .scroll-container {
         display: flex;
-        overflow-x: auto;
-        gap: 15px;
-        padding-bottom: 10px;
+        justify-content: center; /* 卡片群組置中 */
+        gap: 14px;
+        padding-bottom: 12px;
+        padding-left: 6px;
+        padding-right: 6px;
         scrollbar-width: none;
+        overflow-x: auto;
       }
 
       .scroll-container::-webkit-scrollbar {
@@ -241,29 +290,34 @@
 
       .mini-card {
         min-width: 140px;
-        background: rgba(255, 255, 255, 0.06);
-        border-radius: 15px;
-        padding: 20px 15px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(0, 0, 0, 0.12)
+        );
+        border-radius: 12px;
+        padding: 16px 12px;
         text-align: center;
-        border: 2px solid var(--metal-border);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+        margin: 0 4px;
       }
 
       .mini-time {
-        background: var(--steel-blue);
+        background: linear-gradient(180deg, var(--steel-blue), #355a72);
         color: white;
-        padding: 3px 10px;
-        border-radius: 5px;
-        font-weight: bold;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-weight: 700;
         margin-bottom: 10px;
         display: inline-block;
       }
 
       .mini-icon {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
       }
-
       .mini-temp {
-        font-size: 1.2rem;
+        font-size: 1.05rem;
         color: var(--metal-text);
         font-weight: 700;
       }
@@ -282,7 +336,21 @@
 
       .loading-screen p {
         color: var(--metal-text);
-        margin-top: 20px;
+        margin-top: 18px;
+        font-weight: 700;
+      }
+
+      /* 響應式 */
+      @media (max-width: 420px) {
+        .hero-temp {
+          font-size: 3.2rem;
+        }
+        .hero-icon {
+          font-size: 3rem;
+        }
+        .container {
+          padding: 12px;
+        }
       }
     </style>
   </head>
@@ -290,7 +358,7 @@
   <body>
     <!-- loading -->
     <div id="loading" class="loading-screen">
-      <div style="font-size: 4rem; animation: bounce 2s infinite">☁️</div>
+      <div style="font-size: 4rem; animation: floaty 2s infinite">☁️</div>
       <p style="font-weight: bold">正在觀測雲的流動...</p>
     </div>
 
@@ -351,6 +419,39 @@
         return "深夜";
       }
 
+      // C2 星芒十字科技螺絲：內嵌 SVG 字串（亮銀漸層）
+      function boltSVG() {
+        return `
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                <stop offset="0.5" stop-color="#d6dbe0"/>
+                <stop offset="1" stop-color="#aeb6bb"/>
+              </linearGradient>
+              <filter id="f1" x="-40%" y="-40%" width="180%" height="180%">
+                <feDropShadow dx="0" dy="2" stdDeviation="1" flood-color="#000" flood-opacity="0.5"/>
+              </filter>
+            </defs>
+
+            <!-- 外圈 -->
+            <circle cx="32" cy="32" r="28" fill="url(#g1)" stroke="#8f9599" stroke-width="3" />
+
+            <!-- 星芒十字 (四個尖角) -->
+            <g transform="translate(32,32)">
+              <path d="M0,-16 L6,-6 L16,0 L6,6 L0,16 L-6,6 L-16,0 L-6,-6 Z" fill="#f8fbfd" opacity="0.95" />
+              <path d="M0,-12 L4,-5 L12,0 L4,5 L0,12 L-4,5 L-12,0 L-4,-5 Z" fill="#cfd6db" opacity="0.85"/>
+            </g>
+
+            <!-- 十字溝 -->
+            <g stroke="#6d7277" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16" y1="32" x2="48" y2="32" />
+              <line x1="32" y1="16" x2="32" y2="48" />
+            </g>
+          </svg>
+        `;
+      }
+
       function renderWeather(data) {
         const forecasts = data.forecasts;
         const current = forecasts[0];
@@ -363,45 +464,45 @@
           (parseInt(current.maxTemp) + parseInt(current.minTemp)) / 2
         );
 
+        // Hero 卡片 HTML（包含四個螺絲）
         document.getElementById("heroCard").innerHTML = `
-                        <div class="hero-card">
-                            <div class="hero-period">${period}</div>
-                            <div class="hero-temp-container">
-                                <div class="hero-icon">${getWeatherIcon(
-                                  current.weather
-                                )}</div>
-                                <div class="hero-temp">${avgTemp}°</div>
-                            </div>
-                            <div class="hero-desc">${current.weather}</div>
-                            
-                            <div class="advice-grid">
-                                <div class="advice-item">
-                                    <div class="advice-icon">${
-                                      advice.rainIcon
-                                    }</div>
-                                    <div class="advice-text">${
-                                      advice.rainText
-                                    }</div>
-                                    <div style="font-size:0.7rem; color:#999">降雨率 ${
-                                      current.rain
-                                    }</div>
-                                </div>
-                                <div class="advice-item">
-                                    <div class="advice-icon">${
-                                      advice.clothIcon
-                                    }</div>
-                                    <div class="advice-text">${
-                                      advice.clothText
-                                    }</div>
-                                    <div style="font-size:0.7rem; color:#999">最高溫 ${
-                                      current.maxTemp
-                                    }°</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+          <div class="hero-card">
+            <!-- 螺絲：四角（C2 星芒十字） -->
+            <span class="bolt bolt-tl">${boltSVG()}</span>
+            <span class="bolt bolt-tr">${boltSVG()}</span>
+            <span class="bolt bolt-bl">${boltSVG()}</span>
+            <span class="bolt bolt-br">${boltSVG()}</span>
 
-        // 2. 渲染稍後預報 (包含明天判斷)
+            <div class="hero-period">${period}</div>
+
+            <div class="hero-temp-container">
+              <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
+              <div class="hero-temp">${avgTemp}°</div>
+            </div>
+
+            <div class="hero-desc">${current.weather}</div>
+
+            <div class="advice-grid">
+              <div class="advice-item">
+                <div class="advice-icon">${advice.rainIcon}</div>
+                <div class="advice-text">${advice.rainText}</div>
+                <div style="font-size:0.75rem; color:#9aa0a6">降雨率 ${
+                  current.rain
+                }</div>
+              </div>
+
+              <div class="advice-item">
+                <div class="advice-icon">${advice.clothIcon}</div>
+                <div class="advice-text">${advice.clothText}</div>
+                <div style="font-size:0.75rem; color:#9aa0a6">最高溫 ${
+                  current.maxTemp
+                }</div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // 2. 渲染稍後預報（包含明天判斷）
         const scrollContainer = document.getElementById("futureForecasts");
         scrollContainer.innerHTML = "";
 
@@ -418,19 +519,15 @@
           }
 
           scrollContainer.innerHTML += `
-                            <div class="mini-card">
-                                <div class="mini-time">${p}</div>
-                                <div class="mini-icon">${getWeatherIcon(
-                                  f.weather
-                                )}</div>
-                                <div class="mini-temp">${f.minTemp}° - ${
-            f.maxTemp
-          }°</div>
-                                <div style="font-size:0.8rem; color:#888; margin-top:5px;">💧${
-                                  f.rain
-                                }</div>
-                            </div>
-                        `;
+            <div class="mini-card">
+              <div class="mini-time">${p}</div>
+              <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
+              <div class="mini-temp">${f.minTemp} - ${f.maxTemp}</div>
+              <div style="font-size:0.8rem; color:#9aa0a6; margin-top:6px;">💧 ${
+                f.rain
+              }</div>
+            </div>
+          `;
         });
 
         // 3. 右上角顯示今日日期
@@ -471,6 +568,24 @@
         } catch (e) {
           console.error(e);
           alert("天氣資料讀取失敗，狸克把網路線咬斷了！");
+          // 隱藏 loading（避免卡住），並可顯示基本版內容
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("mainContent").style.display = "block";
+          document.getElementById("heroCard").innerHTML = `
+            <div class="hero-card">
+              <span class="bolt bolt-tl">${boltSVG()}</span>
+              <span class="bolt bolt-tr">${boltSVG()}</span>
+              <span class="bolt bolt-bl">${boltSVG()}</span>
+              <span class="bolt bolt-br">${boltSVG()}</span>
+
+              <div class="hero-period">離線</div>
+              <div class="hero-temp-container">
+                <div class="hero-icon">❌</div>
+                <div class="hero-temp">--</div>
+              </div>
+              <div class="hero-desc">無法取得資料</div>
+            </div>
+          `;
         }
       }
 
