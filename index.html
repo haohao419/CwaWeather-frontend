@@ -95,15 +95,51 @@
       }
 
       .location-pill {
+        position: relative;
+        display: inline-block;
+      }
+
+      .location-select {
         background: linear-gradient(180deg, var(--steel-blue), #2f5166);
         color: white;
-        padding: 6px 14px;
+        padding: 6px 38px 6px 14px;
         border-radius: 6px;
         font-weight: 700;
         font-size: 1.05rem;
         letter-spacing: 1px;
         border: 1px solid rgba(255, 255, 255, 0.06);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+        appearance: none;
+        font-family: "Teko", "Orbitron", sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .location-select option {
+        background: #ffffff;
+        color: #000000;
+        font-weight: 600;
+      }
+
+      .location-select:hover {
+        background: linear-gradient(180deg, #4a6d88, #3a5f78);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+      }
+
+      .location-select:focus {
+        outline: 2px solid rgba(255, 255, 255, 0.2);
+        outline-offset: 2px;
+      }
+
+      .location-pill::after {
+        content: '▼';
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.8);
+        pointer-events: none;
       }
 
       .update-pill {
@@ -143,8 +179,8 @@
       /* 四角螺絲（使用內嵌 SVG） */
       .bolt {
         position: absolute;
-        width: 26px;  /* ✅ 改小顆 */
-        height: 26px; /* ✅ 改小顆 */
+        width: 26px;
+        height: 26px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -270,12 +306,12 @@
         margin: 12px 0 10px 0;
         font-weight: 700;
         letter-spacing: 1px;
-        text-align: center; /* 稍後預報置中 */
+        text-align: center;
       }
 
       .scroll-container {
         display: flex;
-        justify-content: center; /* 卡片群組置中 */
+        justify-content: center;
         gap: 14px;
         padding-bottom: 12px;
         padding-left: 6px;
@@ -351,6 +387,10 @@
         .container {
           padding: 12px;
         }
+        .location-select {
+          font-size: 0.95rem;
+          padding: 6px 32px 6px 12px;
+        }
       }
     </style>
   </head>
@@ -364,7 +404,16 @@
 
     <!-- top bar -->
     <div class="status-bar">
-      <div class="location-pill">📍 桃園市</div>
+      <div class="location-pill">
+        <select id="citySelect" class="location-select">
+          <option value="taipei">📍 臺北市</option>
+          <option value="newtaipei">📍 新北市</option>
+          <option value="taoyuan" selected>📍 桃園市</option>
+          <option value="taichung">📍 臺中市</option>
+          <option value="tainan">📍 臺南市</option>
+          <option value="kaohsiung">📍 高雄市</option>
+        </select>
+      </div>
       <div id="updateTime" class="update-pill">更新中...</div>
     </div>
 
@@ -376,8 +425,19 @@
     </div>
 
     <script>
-      const API_URL =
-        "https://weather-vibecodingcamp.zeabur.app/api/weather/taoyuan";
+      const API_BASE_URL = "https://weather-vibecodingcamp.zeabur.app/api/weather";
+      
+      // 城市對照表
+      const CITIES = {
+        taipei: "臺北市",
+        newtaipei: "新北市",
+        taoyuan: "桃園市",
+        taichung: "臺中市",
+        tainan: "臺南市",
+        kaohsiung: "高雄市"
+      };
+
+      let currentCity = "taoyuan"; // 預設桃園市
 
       function getWeatherIcon(weather) {
         if (!weather) return "🌤️";
@@ -419,7 +479,6 @@
         return "深夜";
       }
 
-      // C2 星芒十字科技螺絲：內嵌 SVG 字串（亮銀漸層）
       function boltSVG() {
         return `
           <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -542,18 +601,24 @@
         ).textContent = `${month}月${date}日 ${days[dayIndex]}`;
       }
 
-      async function fetchWeather() {
+      async function fetchWeather(city = currentCity, showLoading = true) {
         try {
+          // 顯示 loading
+          if (showLoading) {
+            document.getElementById("loading").style.display = "flex";
+            document.getElementById("mainContent").style.display = "none";
+          }
+
           // 1. 定義「最低等待時間」：1500 毫秒 (1.5秒)
           const delayPromise = new Promise((resolve) =>
             setTimeout(resolve, 1500)
           );
 
           // 2. 定義「抓取資料」的工作
+          const API_URL = `${API_BASE_URL}/${city}`;
           const fetchPromise = fetch(API_URL).then((res) => res.json());
 
           // 3. Promise.all 會等待「兩個都完成」才會往下走
-          // result 陣列裡，第一個是 delay 的結果(沒用到)，第二個是 api 的 json 資料
           const [_, json] = await Promise.all([delayPromise, fetchPromise]);
 
           if (json.success) {
@@ -589,7 +654,16 @@
         }
       }
 
-      document.addEventListener("DOMContentLoaded", fetchWeather);
+      // 監聽下拉選單變更
+      document.getElementById("citySelect").addEventListener("change", function(e) {
+        currentCity = e.target.value;
+        fetchWeather(currentCity, true);
+      });
+
+      // 頁面載入時抓取預設城市（桃園市）
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchWeather(currentCity, true);
+      });
     </script>
   </body>
 </html>
